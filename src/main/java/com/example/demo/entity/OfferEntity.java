@@ -6,23 +6,23 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "credit")
+@Table(name = "offer")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class CreditEntity {
+public class OfferEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private double percent;
-
-    private double limit;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private BankEntity bank;
+//    @OneToOne(fetch = FetchType.EAGER)
+//    private ClientEntity client;
+//
+//    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    private CreditEntity credit;
 }

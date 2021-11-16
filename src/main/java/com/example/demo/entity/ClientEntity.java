@@ -8,20 +8,24 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "credit")
+@Table(name = "client")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class CreditEntity {
+public class ClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private double percent;
+    private String name;
 
-    private double limit;
+    private String phone;
+
+    private String email;
+
+    private String passport;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private BankEntity bank;
