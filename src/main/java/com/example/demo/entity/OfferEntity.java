@@ -20,9 +20,16 @@ public class OfferEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-//    @OneToOne(fetch = FetchType.EAGER)
-//    private ClientEntity client;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private ClientEntity client;
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private CreditEntity credit;
+
+    @Column
+    private long loanAmount;
+
+//    private class PaymentCalendar{
 //
-//    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private CreditEntity credit;
+//    }
 }

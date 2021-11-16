@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,11 +22,13 @@ public class BankEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToMany(mappedBy = "bank",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<CreditEntity> credits;
 
-    @OneToMany(mappedBy = "bank",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ClientEntity> clients;
 }

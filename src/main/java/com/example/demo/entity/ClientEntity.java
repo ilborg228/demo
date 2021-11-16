@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "client")
@@ -29,4 +30,8 @@ public class ClientEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private BankEntity bank;
+
+    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<OfferEntity> offers;
 }

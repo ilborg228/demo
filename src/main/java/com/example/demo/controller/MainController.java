@@ -15,6 +15,6 @@ public class MainController {
 
     @GetMapping("/")
     public ResponseEntity<?> mainPage(){
-        return ResponseEntity.ok(repo.save(new CreditEntity()));
+        return ResponseEntity.ok("!!");
     }
 }
