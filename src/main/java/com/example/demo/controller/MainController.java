@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
 
 
-    @GetMapping("/")
+    @GetMapping("/a")
     public ResponseEntity<?> mainPage(){
         return ResponseEntity.ok("!!");
     }

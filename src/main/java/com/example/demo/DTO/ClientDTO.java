@@ -25,6 +25,7 @@ public class ClientDTO {
 
     public static ClientDTO toDTO(ClientEntity entity){
         entity.getBank().setClients(null);
+        entity.getBank().setCredits(null);
         List<OfferEntity> offers = entity.getOffers().stream()
                 .peek(p->p.setClient(null))
                 .collect(Collectors.toList());
