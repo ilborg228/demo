@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
-    @Autowired
-    private CreditRepository repo;
 
     @GetMapping("/")
     public ResponseEntity<?> mainPage(){

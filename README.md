@@ -4,7 +4,7 @@ Test Task
 Prerequisites
 -------------
 
-* [Java Development Kit (JDK) 11](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Java Development Kit (JDK) 11](https://www.oracle.com/java/technologies/downloads/#java11)
 * [Maven 3](https://maven.apache.org/download.cgi)
 
 Build and Run
