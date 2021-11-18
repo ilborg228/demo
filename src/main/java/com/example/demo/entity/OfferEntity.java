@@ -20,10 +20,11 @@ public class OfferEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    @ManyToOne
     private ClientEntity client;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne
     private CreditEntity credit;
 
     @Column

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "credit")
@@ -23,6 +24,10 @@ public class CreditEntity {
 
     private double limit;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private BankEntity bank;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "credits", cascade = CascadeType.ALL)
+    private List<BankEntity> bank;
+
+    @JoinColumn
+    @OneToOne(cascade = {CascadeType.ALL})
+    private OfferEntity offer;
 }

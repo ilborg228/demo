@@ -22,13 +22,18 @@ public class BankEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @JoinTable(name = "credit_bank",
+            joinColumns = @JoinColumn(name = "bank_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "credit_entity_id", referencedColumnName = "bank_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL})
     @ToString.Exclude
     private List<CreditEntity> credits;
 
+    @JoinTable(name = "bank_clients",
+            joinColumns = @JoinColumn(name = "bank_entity_id", referencedColumnName = "clients_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL})
     @ToString.Exclude
     private List<ClientEntity> clients;
 }

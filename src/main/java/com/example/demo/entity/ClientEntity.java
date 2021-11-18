@@ -4,9 +4,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -14,7 +18,7 @@ import java.util.List;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class ClientEntity {
+public class ClientEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,14 +28,18 @@ public class ClientEntity {
 
     private String phone;
 
+    @Email
     private String email;
 
     private String passport;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private BankEntity bank;
-
-    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "clients")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
+    private List<BankEntity> bank;
+
+    @JoinColumn
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OfferEntity> offers;
 }
