@@ -39,10 +39,10 @@ public class MainView extends VerticalLayout {
         add(actions, grid, editor);
 
         grid.setHeight("300px");
-        grid.setColumns("id", "firstName", "lastName");
+        grid.setColumns("id", "email", "name","passport","phone");
         grid.getColumnByKey("id").setWidth("50px").setFlexGrow(0);
 
-        filter.setPlaceholder("Filter by last name");
+        filter.setPlaceholder("Filter by name");
 
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(e -> listCustomers(e.getValue()));
@@ -51,7 +51,7 @@ public class MainView extends VerticalLayout {
             editor.editCustomer(e.getValue());
         });
 
-        addNewBtn.addClickListener(e -> editor.editCustomer(new ClientEntity("", "")));
+        addNewBtn.addClickListener(e -> editor.editCustomer(new ClientEntity()));
 
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
@@ -66,7 +66,7 @@ public class MainView extends VerticalLayout {
             grid.setItems((List<ClientEntity>) repo.findAll());
         }
         else {
-            grid.setItems(repo.findByNameStartsWithIgnoreCase(filterText));
+            grid.setItems((List<ClientEntity>)repo.findByNameStartsWithIgnoreCase(filterText));
         }
     }
 }

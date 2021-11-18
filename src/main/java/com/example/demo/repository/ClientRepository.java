@@ -8,5 +8,5 @@ import java.util.Collection;
 
 @Repository
 public interface ClientRepository extends CrudRepository<ClientEntity,Long> {
-    List<ClientEntity> findByNameStartsWithIgnoreCase(String filterText);
+    Iterable<ClientEntity> findByNameStartsWithIgnoreCase(String filterText);
 }
