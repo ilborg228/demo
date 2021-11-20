@@ -36,10 +36,10 @@ public class ClientEntity{
     @ManyToMany(mappedBy = "clients")
     @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
-    private List<BankEntity> bank;
+    private List<BankEntity> banks;
 
-    @JoinColumn
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "client")
     private List<OfferEntity> offers;
 }

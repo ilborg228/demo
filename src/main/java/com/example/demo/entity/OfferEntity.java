@@ -4,8 +4,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -30,7 +34,8 @@ public class OfferEntity {
     @Column
     private long loanAmount;
 
-//    private class PaymentCalendar{
-//
-//    }
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "offer")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ToString.Exclude
+    private List<CalendarEntity> calendar;
 }
