@@ -33,10 +33,10 @@ public class ClientEntity{
 
     private String passport;
 
-    @ManyToMany(mappedBy = "clients")
+    @ManyToOne
     @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
-    private List<BankEntity> banks;
+    private BankEntity bank;
 
     @ToString.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
