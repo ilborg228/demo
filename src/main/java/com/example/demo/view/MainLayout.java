@@ -1,5 +1,6 @@
 package com.example.demo.view;
 
+import com.example.demo.view.client.ClientListView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;

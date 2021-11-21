@@ -11,7 +11,7 @@ import javax.annotation.security.PermitAll;
 @Component
 @Scope("prototype")
 @Route(value="credits", layout = MainLayout.class)
-@PageTitle("Contacts | Vaadin CRM")
+@PageTitle("CRM")
 @PermitAll
 public class CreditView extends VerticalLayout {
 }

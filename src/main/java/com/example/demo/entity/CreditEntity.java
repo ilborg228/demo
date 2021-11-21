@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,10 +26,12 @@ public class CreditEntity {
 
     private double limit;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "credits", cascade = CascadeType.ALL)
-    private List<BankEntity> bank;
+    @ManyToOne
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private BankEntity bank;
 
-    @JoinColumn
-    @OneToOne(cascade = {CascadeType.ALL})
-    private OfferEntity offer;
+    @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "credit")
+    private List<OfferEntity> offers;
 }

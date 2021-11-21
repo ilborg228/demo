@@ -18,11 +18,13 @@ public class ClientService {
 
 
     public List<BankEntity> findAllBanks() {
-        return (List<BankEntity>)bankRepository.findAll();
+        List<BankEntity> l = (List<BankEntity>)bankRepository.findAll();
+        return l;
     }
 
-    public List<ClientEntity> findAllClients(String value) {
-        return (List<ClientEntity>)clientRepository.findAll();
+    public List<ClientEntity> findAllClientsByName(String value) {
+        List<ClientEntity> l = (List<ClientEntity>) clientRepository.findByNameStartsWithIgnoreCase(value);
+        return l;
     }
 
     public void saveClient(ClientEntity client) {

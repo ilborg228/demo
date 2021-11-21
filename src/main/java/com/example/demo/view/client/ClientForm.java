@@ -1,4 +1,4 @@
-package com.example.demo.view;
+package com.example.demo.view.client;
 
 import com.example.demo.entity.BankEntity;
 import com.example.demo.entity.ClientEntity;
@@ -39,7 +39,7 @@ public class ClientForm extends FormLayout {
 
         bank.setItems(banks);
         bank.setItemLabelGenerator(BankEntity::getName);
-        add(name,phone,email,passport,createButtonsLayout());
+        add(name,phone,email,passport,bank,createButtonsLayout());
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -98,7 +98,6 @@ public class ClientForm extends FormLayout {
         DeleteEvent(ClientForm source, ClientEntity client) {
             super(source, client);
         }
-
     }
 
     public static class CloseEvent extends ClientFormEvent {

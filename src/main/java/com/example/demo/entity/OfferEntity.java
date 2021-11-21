@@ -28,7 +28,8 @@ public class OfferEntity {
     @ManyToOne
     private ClientEntity client;
 
-    @OneToOne
+    @ManyToOne
+    @LazyCollection(LazyCollectionOption.FALSE)
     private CreditEntity credit;
 
     @Column

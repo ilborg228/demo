@@ -1,7 +1,8 @@
-package com.example.demo.view;
+package com.example.demo.view.client;
 
 import com.example.demo.entity.ClientEntity;
 import com.example.demo.service.ClientService;
+import com.example.demo.view.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -20,7 +21,7 @@ import javax.annotation.security.PermitAll;
 @Component
 @Scope("prototype")
 @Route(value="", layout = MainLayout.class)
-@PageTitle("Contacts | Vaadin CRM")
+@PageTitle("CRM")
 @PermitAll
 public class ClientListView extends VerticalLayout {
     Grid<ClientEntity> grid = new Grid<>(ClientEntity.class);
@@ -28,9 +29,9 @@ public class ClientListView extends VerticalLayout {
     ClientForm form;
     ClientService service;
 
-
     public ClientListView(ClientService service) {
         this.service=service;
+
         addClassName("list-view");
         setSizeFull();
         configureGrid();
@@ -58,7 +59,7 @@ public class ClientListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("client-grid");
         grid.setSizeFull();
-        grid.setColumns("name", "phone", "email","passport");
+        grid.setColumns("name", "phone", "email","passport","bank");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -68,7 +69,7 @@ public class ClientListView extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addContactButton = new Button("Add contact");
+        Button addContactButton = new Button("Add client");
         addContactButton.addClickListener(click -> addContact());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
@@ -110,6 +111,6 @@ public class ClientListView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllClients(filterText.getValue()));
+        grid.setItems(service.findAllClientsByName(filterText.getValue()));
     }
 }
