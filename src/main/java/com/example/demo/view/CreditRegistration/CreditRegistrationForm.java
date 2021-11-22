@@ -11,6 +11,7 @@ import com.example.demo.service.CreditService;
 import com.example.demo.service.OfferService;
 import com.example.demo.view.MainLayout;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -26,6 +27,8 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.security.PermitAll;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Scope("prototype")
 @Route(value="creditregistration", layout = MainLayout.class)
@@ -43,6 +46,7 @@ public class CreditRegistrationForm extends VerticalLayout {
     private final CalendarService calendarService;
     private final ClientService clientService;
     private final CreditService creditService;
+    private List<CalendarEntity> calendarList = new ArrayList<>();
 
     TextField clientId = new TextField("Client ID");
     TextField creditId = new TextField("Credit ID");
@@ -57,6 +61,7 @@ public class CreditRegistrationForm extends VerticalLayout {
     public CreditRegistrationForm(OfferRepository offerRepository, CalendarRepository calendarRepository,
                                   OfferService offerService, CalendarService calendarService,
                                   CreditService creditService, ClientService clientService) {
+
         this.calendarRepository = calendarRepository;
         this.offerRepository = offerRepository;
         this.calendarService = calendarService;
@@ -74,6 +79,7 @@ public class CreditRegistrationForm extends VerticalLayout {
     }
 
     private void save() {
+        double sum = 0,sumPercent = 0;
         try {
             binder.writeBean(creditRegistration);
         } catch (ValidationException e) {
@@ -98,11 +104,24 @@ public class CreditRegistrationForm extends VerticalLayout {
             double percentAmount = loanAmount * credit.getPercent() / 1200;
             calendar.setPercentAmount(percentAmount);
             loanAmount *= 1+(credit.getPercent()/1200);
-            loanAmount -= bodyAmount;
             double paymentAmount = bodyAmount + percentAmount;
+            loanAmount -= paymentAmount;
+            sum += paymentAmount;
+            sumPercent += percentAmount;
             calendar.setPaymentAmount(paymentAmount);
             calendarService.save(calendar);
+            calendarList.add(calendar);
         }
-        Notification.show("Successful");
+        Notification.show("Общая сумма кредита:"+sum);
+        Notification.show("Общая сумма процентов:"+sumPercent);
+        showGrid();
     }
+
+    public void showGrid() {
+        Grid<CalendarEntity> grid = new Grid<>(CalendarEntity.class, false);
+        grid.setColumns("date","paymentAmount","bodyAmount","percentAmount");
+        grid.setItems(calendarList);
+        add(grid);
+    }
+
 }
