@@ -61,7 +61,6 @@ public class CreditForm extends FormLayout {
         delete.addClickListener(event -> fireEvent(new DeleteEvent(this, credit)));
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
-
         binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
 
         return new HorizontalLayout(save, delete, close);

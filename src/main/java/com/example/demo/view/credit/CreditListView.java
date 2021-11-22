@@ -4,7 +4,6 @@ import com.example.demo.entity.CreditEntity;
 import com.example.demo.service.BankService;
 import com.example.demo.service.CreditService;
 import com.example.demo.view.MainLayout;
-import com.example.demo.view.client.ClientForm;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -44,7 +43,7 @@ public class CreditListView extends VerticalLayout {
         form.setWidth("25em");
         form.addListener(CreditForm.SaveEvent.class, this::saveCredit);
         form.addListener(CreditForm.DeleteEvent.class, this::deleteCredit);
-        form.addListener(ClientForm.CloseEvent.class, e -> closeEditor());
+        form.addListener(CreditForm.CloseEvent.class, e -> closeEditor());
 
         FlexLayout content = new FlexLayout(grid, form);
         content.setFlexGrow(2, grid);
