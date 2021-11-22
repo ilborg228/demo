@@ -20,6 +20,6 @@ class DemoApplicationTests {
 
 	@Test
 	void getFromDatabase(){
-		System.out.println(creditService.findById("1").get());
+		System.out.println(creditService.findById("1"));
 	}
 }

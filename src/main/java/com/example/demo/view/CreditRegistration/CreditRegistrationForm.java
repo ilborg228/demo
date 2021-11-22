@@ -1,8 +1,11 @@
 package com.example.demo.view.CreditRegistration;
 
 import com.example.demo.entity.CalendarEntity;
+import com.example.demo.entity.ClientEntity;
 import com.example.demo.entity.CreditEntity;
 import com.example.demo.entity.OfferEntity;
+import com.example.demo.exception.NoSuchClientException;
+import com.example.demo.exception.NoSuchCreditException;
 import com.example.demo.repository.CalendarRepository;
 import com.example.demo.repository.OfferRepository;
 import com.example.demo.service.CalendarService;
@@ -79,42 +82,47 @@ public class CreditRegistrationForm extends VerticalLayout {
     }
 
     private void save() {
-        double sum = 0,sumPercent = 0;
         try {
-            binder.writeBean(creditRegistration);
-        } catch (ValidationException e) {
-            e.printStackTrace();
+            double sum = 0,sumPercent = 0;
+            offer = new OfferEntity();
+            try {
+                binder.writeBean(creditRegistration);
+            } catch (ValidationException e) {
+                e.printStackTrace();
+            }
+            CreditEntity credit = creditService.findById(creditRegistration.getCreditId());
+            ClientEntity client = clientService.findById(creditRegistration.getClientId());
+            double loanAmount = Double.parseDouble(creditRegistration.getAmount());
+            double duration = Double.parseDouble(creditRegistration.getDuration());
+            offer.setCredit(credit);
+            offer.setClient(client);
+            if(credit.getLimit()<loanAmount)
+                loanAmount=credit.getLimit();
+            offer.setLoanAmount(loanAmount);
+            offerService.save(offer);
+            double bodyAmount = loanAmount/duration/12;
+            for (int i = 0;i<duration*12;i++){
+                calendar = new CalendarEntity();
+                calendar.setDate(new Date(System.currentTimeMillis()+(2592000000L * i)));
+                calendar.setOffer(offer);
+                calendar.setBodyAmount(bodyAmount);
+                double percentAmount = loanAmount * credit.getPercent() / 1200;
+                calendar.setPercentAmount(percentAmount);
+                loanAmount *= 1+(credit.getPercent()/1200);
+                double paymentAmount = bodyAmount + percentAmount;
+                loanAmount -= paymentAmount;
+                sum += paymentAmount;
+                sumPercent += percentAmount;
+                calendar.setPaymentAmount(paymentAmount);
+                calendarService.save(calendar);
+                calendarList.add(calendar);
+            }
+            Notification.show("Общая сумма кредита:"+sum);
+            Notification.show("Общая сумма процентов:"+sumPercent);
+            showGrid();
+        } catch (NoSuchCreditException | NoSuchClientException e) {
+            Notification.show(e.getMessage());
         }
-        offer = new OfferEntity();
-        CreditEntity credit = creditService.findById(creditRegistration.getCreditId()).get();
-        double loanAmount = Double.parseDouble(creditRegistration.getAmount());
-        double duration = Double.parseDouble(creditRegistration.getDuration());
-        offer.setCredit(credit);
-        offer.setClient(clientService.findById(creditRegistration.getClientId()).get());
-        if(credit.getLimit()<loanAmount)
-            loanAmount=credit.getLimit();
-        offer.setLoanAmount(loanAmount);
-        offerService.save(offer);
-        double bodyAmount = loanAmount/duration/12;
-        for (int i = 0;i<duration*12;i++){
-            calendar = new CalendarEntity();
-            calendar.setDate(new Date(System.currentTimeMillis()+(2592000000L * i)));
-            calendar.setOffer(offer);
-            calendar.setBodyAmount(bodyAmount);
-            double percentAmount = loanAmount * credit.getPercent() / 1200;
-            calendar.setPercentAmount(percentAmount);
-            loanAmount *= 1+(credit.getPercent()/1200);
-            double paymentAmount = bodyAmount + percentAmount;
-            loanAmount -= paymentAmount;
-            sum += paymentAmount;
-            sumPercent += percentAmount;
-            calendar.setPaymentAmount(paymentAmount);
-            calendarService.save(calendar);
-            calendarList.add(calendar);
-        }
-        Notification.show("Общая сумма кредита:"+sum);
-        Notification.show("Общая сумма процентов:"+sumPercent);
-        showGrid();
     }
 
     public void showGrid() {
