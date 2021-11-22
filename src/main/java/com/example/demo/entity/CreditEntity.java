@@ -36,6 +36,6 @@ public class CreditEntity {
 
     @ToString.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "credit")
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "credit")
     private List<OfferEntity> offers;
 }
