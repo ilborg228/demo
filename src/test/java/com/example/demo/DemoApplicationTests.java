@@ -21,9 +21,6 @@ class DemoApplicationTests {
 
 	@Test
 	void getFromDatabase(){
-		CreditEntity entity = creditRepository.findById("ff8081817d47c69b017d47c71c4d0002").get();
-		entity.setBank(null);
-		entity.setOffers(null);
-		creditRepository.delete(entity);
+		creditRepository.findAll();
 	}
 }
