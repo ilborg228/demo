@@ -21,7 +21,7 @@ import javax.annotation.security.PermitAll;
 
 @Component
 @Scope("prototype")
-@Route(value="", layout = MainLayout.class)
+@Route(value="clients", layout = MainLayout.class)
 @PageTitle("CRM")
 @PermitAll
 public class ClientListView extends VerticalLayout {

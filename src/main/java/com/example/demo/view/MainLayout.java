@@ -1,6 +1,7 @@
 package com.example.demo.view;
 
 import com.example.demo.view.CreditRegistration.CreditRegistrationForm;
+import com.example.demo.view.bank.BankListView;
 import com.example.demo.view.client.ClientListView;
 import com.example.demo.view.credit.CreditListView;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -10,8 +11,10 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
+import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
+@Route(value = "")
 public class MainLayout extends AppLayout {
 
     public MainLayout() {
@@ -37,12 +40,14 @@ public class MainLayout extends AppLayout {
     private void createDrawer() {
         RouterLink clientListLink = new RouterLink("Clients List", ClientListView.class);
         RouterLink creditListLink = new RouterLink("Credits List", CreditListView.class);
+        RouterLink bankListLink = new RouterLink("Banks List", BankListView.class);
         RouterLink creditRegistrationLink = new RouterLink("Credit Registration", CreditRegistrationForm.class);
         clientListLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
                 clientListLink,
                 creditListLink,
+                bankListLink,
                 creditRegistrationLink
         ));
     }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BankRepository extends CrudRepository<BankEntity,String> {
+    Iterable<BankEntity> findByNameStartsWithIgnoreCase(String value);
 }

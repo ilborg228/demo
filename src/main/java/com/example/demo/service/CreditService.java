@@ -30,7 +30,7 @@ public class CreditService {
         return l;
     }
 
-    public void deleteCredit(CreditEntity credit) {
+    public void delete(CreditEntity credit) {
         creditRepository.delete(credit);
     }
 

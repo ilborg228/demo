@@ -1,6 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.repository.BankRepository;
+import com.example.demo.entity.CreditEntity;
+import com.example.demo.repository.CreditRepository;
 import com.example.demo.service.CreditService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DemoApplicationTests {
 
 	@Autowired
-	private CreditService creditService;
+	private CreditRepository creditRepository;
 
 	@Test
 	void contextLoads() {
@@ -20,6 +21,7 @@ class DemoApplicationTests {
 
 	@Test
 	void getFromDatabase(){
-		System.out.println(creditService.findById("1"));
+		CreditEntity entity = creditRepository.findById("ff8081817d47b233017d47b23a010000").get();
+		creditRepository.delete(entity);
 	}
 }

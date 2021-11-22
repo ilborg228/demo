@@ -1,8 +1,8 @@
-package com.example.demo.view.credit;
+package com.example.demo.view.bank;
 
-import com.example.demo.entity.CreditEntity;
+import com.example.demo.entity.BankEntity;
+import com.example.demo.entity.ClientEntity;
 import com.example.demo.service.BankService;
-import com.example.demo.service.CreditService;
 import com.example.demo.view.MainLayout;
 import com.example.demo.view.client.ClientForm;
 import com.vaadin.flow.component.button.Button;
@@ -21,30 +21,28 @@ import javax.annotation.security.PermitAll;
 
 @Component
 @Scope("prototype")
-@Route(value="credits", layout = MainLayout.class)
+@Route(value="banks", layout = MainLayout.class)
 @PageTitle("CRM")
 @PermitAll
-public class CreditListView extends VerticalLayout {
+public class BankListView extends VerticalLayout {
 
-    private Grid<CreditEntity> grid = new Grid<>(CreditEntity.class);
+    private Grid<BankEntity> grid = new Grid<>(BankEntity.class);
     private TextField filterText = new TextField();
-    private CreditForm form;
-    private final CreditService creditService;
+    private BankForm form;
     private final BankService bankService;
 
-    public CreditListView(CreditService creditService, BankService bankService) {
-        this.creditService = creditService;
+    public BankListView(BankService bankService) {
         this.bankService = bankService;
 
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        form = new CreditForm(bankService.findAllBanks());
+        form = new BankForm();
         form.setWidth("25em");
-        form.addListener(CreditForm.SaveEvent.class, this::saveCredit);
-        form.addListener(CreditForm.DeleteEvent.class, this::deleteCredit);
-        form.addListener(ClientForm.CloseEvent.class, e -> closeEditor());
+        form.addListener(BankForm.SaveEvent.class, this::saveBank);
+        form.addListener(BankForm.DeleteEvent.class, this::deleteBank);
+        form.addListener(BankForm.CloseEvent.class, e -> closeEditor());
 
         FlexLayout content = new FlexLayout(grid, form);
         content.setFlexGrow(2, grid);
@@ -57,65 +55,64 @@ public class CreditListView extends VerticalLayout {
         updateList();
         closeEditor();
         grid.asSingleSelect().addValueChangeListener(event ->
-                editCredit(event.getValue()));
+                editClient(event.getValue()));
     }
 
     private void configureGrid() {
-        grid.addClassNames("credit-grid");
+        grid.addClassNames("client-grid");
         grid.setSizeFull();
-        grid.setColumns("id", "percent", "limit");
-        grid.addColumn(client -> client.getBank().getName()).setHeader("Bank");
+        grid.setColumns("id","name");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by id...");
+        filterText.setPlaceholder("Filter by name...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addCreditButton = new Button("Add credit");
-        addCreditButton.addClickListener(click -> addCredit());
+        Button addContactButton = new Button("Add bank");
+        addContactButton.addClickListener(click -> addBank());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addCreditButton);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
 
-    private void saveCredit(CreditForm.SaveEvent event) {
-        creditService.save(event.getCredit());
+    private void saveBank(BankForm.SaveEvent event) {
+        bankService.save(event.getBank());
         updateList();
         closeEditor();
     }
 
-    private void deleteCredit(CreditForm.DeleteEvent event) {
-        creditService.delete(event.getCredit());
+    private void deleteBank(BankForm.DeleteEvent event) {
+        bankService.delete(event.getBank());
         updateList();
         closeEditor();
     }
 
-    public void editCredit(CreditEntity credit) {
-        if (credit == null) {
+    public void editClient(BankEntity bank) {
+        if (bank == null) {
             closeEditor();
         } else {
-            form.setCredit(credit);
+            form.setBank(bank);
             form.setVisible(true);
             addClassName("editing");
         }
     }
 
-    void addCredit() {
+    void addBank() {
         grid.asSingleSelect().clear();
-        editCredit(new CreditEntity());
+        editClient(new BankEntity());
     }
 
     private void closeEditor() {
-        form.setCredit(null);
+        form.setBank(null);
         form.setVisible(false);
         removeClassName("editing");
     }
 
     private void updateList() {
-        grid.setItems(creditService.findAllCreditsById(filterText.getValue()));
+        grid.setItems(bankService.findAllBanksByName(filterText.getValue()));
     }
 }
