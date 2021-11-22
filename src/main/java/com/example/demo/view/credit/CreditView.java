@@ -1,5 +1,6 @@
-package com.example.demo.view;
+package com.example.demo.view.credit;
 
+import com.example.demo.view.MainLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;

@@ -1,6 +1,8 @@
 package com.example.demo.view;
 
+import com.example.demo.view.CreditRegistration.CreditRegistrationForm;
 import com.example.demo.view.client.ClientListView;
+import com.example.demo.view.credit.CreditView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
@@ -35,11 +37,13 @@ public class MainLayout extends AppLayout {
     private void createDrawer() {
         RouterLink clientListLink = new RouterLink("Clients List", ClientListView.class);
         RouterLink creditListLink = new RouterLink("Credits List", CreditView.class);
+        RouterLink creditRegistrationLink = new RouterLink("Credit Registration", CreditRegistrationForm.class);
         clientListLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
                 clientListLink,
-                creditListLink
+                creditListLink,
+                creditRegistrationLink
         ));
     }
 }

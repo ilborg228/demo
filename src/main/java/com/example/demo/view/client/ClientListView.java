@@ -1,6 +1,7 @@
 package com.example.demo.view.client;
 
 import com.example.demo.entity.ClientEntity;
+import com.example.demo.service.BankService;
 import com.example.demo.service.ClientService;
 import com.example.demo.view.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -24,19 +25,21 @@ import javax.annotation.security.PermitAll;
 @PageTitle("CRM")
 @PermitAll
 public class ClientListView extends VerticalLayout {
-    Grid<ClientEntity> grid = new Grid<>(ClientEntity.class);
-    TextField filterText = new TextField();
-    ClientForm form;
-    ClientService service;
+    private Grid<ClientEntity> grid = new Grid<>(ClientEntity.class);
+    private TextField filterText = new TextField();
+    private ClientForm form;
+    private final ClientService clientService;
+    private final BankService bankService;
 
-    public ClientListView(ClientService service) {
-        this.service=service;
+    public ClientListView(ClientService clientService, BankService bankService) {
+        this.clientService = clientService;
+        this.bankService = bankService;
 
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        form = new ClientForm(service.findAllBanks());
+        form = new ClientForm(bankService.findAllBanks());
         form.setWidth("25em");
         form.addListener(ClientForm.SaveEvent.class, this::saveClient);
         form.addListener(ClientForm.DeleteEvent.class, this::deleteClient);
@@ -59,7 +62,8 @@ public class ClientListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("client-grid");
         grid.setSizeFull();
-        grid.setColumns("name", "phone", "email","passport","bank");
+        grid.setColumns("id","name", "phone", "email","passport");
+        grid.addColumn(client -> client.getBank().getName()).setHeader("Bank");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -78,13 +82,13 @@ public class ClientListView extends VerticalLayout {
     }
 
     private void saveClient(ClientForm.SaveEvent event) {
-        service.saveClient(event.getClient());
+        clientService.saveClient(event.getClient());
         updateList();
         closeEditor();
     }
 
     private void deleteClient(ClientForm.DeleteEvent event) {
-        service.deleteClient(event.getClient());
+        clientService.deleteClient(event.getClient());
         updateList();
         closeEditor();
     }
@@ -111,6 +115,6 @@ public class ClientListView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllClientsByName(filterText.getValue()));
+        grid.setItems(clientService.findAllClientsByName(filterText.getValue()));
     }
 }

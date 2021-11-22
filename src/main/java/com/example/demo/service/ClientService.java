@@ -8,23 +8,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ClientService {
 
     private final ClientRepository clientRepository;
-    private final BankRepository bankRepository;
 
-
-    public List<BankEntity> findAllBanks() {
-        List<BankEntity> l = (List<BankEntity>)bankRepository.findAll();
-        return l;
-    }
 
     public List<ClientEntity> findAllClientsByName(String value) {
         List<ClientEntity> l = (List<ClientEntity>) clientRepository.findByNameStartsWithIgnoreCase(value);
         return l;
+    }
+
+    public Optional<ClientEntity> findById(String id){
+        Optional<ClientEntity> op = clientRepository.findById(id);
+        return op;
     }
 
     public void saveClient(ClientEntity client) {
