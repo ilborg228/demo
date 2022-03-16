@@ -2,6 +2,7 @@ package com.example.demo.view.credit;
 
 import com.example.demo.entity.CreditEntity;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextField;
 import com.example.demo.entity.BankEntity;
 import com.vaadin.flow.component.ComponentEvent;
@@ -74,6 +75,10 @@ public class CreditForm extends FormLayout {
     private void validateAndSave() {
         try {
             binder.writeBean(credit);
+            if(credit.getBank()==null){
+                Notification.show("Поле \"Bank\" должно быть заполнено!");
+                throw new ValidationException(List.of(),List.of());
+            }
             fireEvent(new SaveEvent(this, credit));
         } catch (ValidationException e) {
             e.printStackTrace();

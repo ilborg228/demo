@@ -1,9 +1,6 @@
 package com.example.demo.view.CreditRegistration;
 
-import com.example.demo.entity.CalendarEntity;
-import com.example.demo.entity.ClientEntity;
-import com.example.demo.entity.CreditEntity;
-import com.example.demo.entity.OfferEntity;
+import com.example.demo.entity.*;
 import com.example.demo.exception.NoSuchClientException;
 import com.example.demo.exception.NoSuchCreditException;
 import com.example.demo.repository.CalendarRepository;

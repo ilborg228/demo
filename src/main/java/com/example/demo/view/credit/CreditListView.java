@@ -63,7 +63,7 @@ public class CreditListView extends VerticalLayout {
         grid.addClassNames("credit-grid");
         grid.setSizeFull();
         grid.setColumns("id", "percent", "limit");
-        grid.addColumn(client -> client.getBank().getName()).setHeader("Bank");
+        grid.addColumn(credit -> credit.getBank().getName()).setHeader("Bank");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
