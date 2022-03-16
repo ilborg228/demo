@@ -1,0 +1,78 @@
+/*C12*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/SET SCHEMA PUBLIC
+drop table if exists calendar
+create table calendar (\u000d\u000a   id CHAR(32) not null,\u000d\u000a    body_amount double not null,\u000d\u000a    date date,\u000d\u000a    payment_amount double not null,\u000d\u000a    percent_amount double not null,\u000d\u000a    offer_id CHAR(32),\u000d\u000a    primary key (id),\u000d\u000a   foreign key (offer_id)\u000d\u000a       references offer\u000d\u000a)
+/*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+drop table if exists calendar
+create table calendar (\u000a      id CHAR(32) not null,\u000a      body_amount double not null,\u000a      date date,\u000a      payment_amount double not null,\u000a      percent_amount double not null,\u000a      offer_id CHAR(32),\u000a      primary key (id),\u000a      foreign key (offer_id)\u000a          references offer\u000a)
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/drop table if exists calendar
+create table calendar (\u000d\u000a      id CHAR(32) not null,\u000d\u000a      body_amount double not null,\u000d\u000a      date date,\u000d\u000a      payment_amount double not null,\u000d\u000a      percent_amount double not null,\u000d\u000a      offer_id CHAR(32),\u000d\u000a      primary key (id),\u000d\u000a      foreign key (offer_id)\u000d\u000a          references offer\u000d\u000a)
+/*C21*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C22*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/drop table if exists calendar
+drop table if exists offer
+drop table if exists client
+drop table if exists credit
+drop table if exists bank
+/*C23*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C24*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C25*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/drop table if exists calendar
+drop table if exists offer
+drop table if exists client
+drop table if exists credit
+drop table if exists bank
+create table calendar (\u000d\u000a      id CHAR(32) not null,\u000d\u000a      body_amount double not null,\u000d\u000a      date date,\u000d\u000a      payment_amount double not null,\u000d\u000a      percent_amount double not null,\u000d\u000a      offer_id CHAR(32),\u000d\u000a      primary key (id)\u000d\u000a)
+/*C26*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/drop table if exists calendar
+drop table if exists offer
+drop table if exists client
+drop table if exists credit
+drop table if exists bank
+create table calendar (\u000d\u000a      id CHAR(32) not null,\u000d\u000a      body_amount double not null,\u000d\u000a      date date,\u000d\u000a      payment_amount double not null,\u000d\u000a      percent_amount double not null,\u000d\u000a      offer_id CHAR(32),\u000d\u000a      primary key (id)\u000d\u000a)
+create table offer (\u000d\u000a   id CHAR(32) not null,\u000d\u000a    name varchar(255),\u000d\u000a    primary key (id)\u000d\u000a)
+create table client (\u000d\u000a   id CHAR(32) not null,\u000d\u000a    email varchar(255),\u000d\u000a    name varchar(255),\u000d\u000a    passport varchar(255),\u000d\u000a    phone varchar(255),\u000d\u000a    bank_id CHAR(32),\u000d\u000a    primary key (id)\u000d\u000a)
+create table credit (\u000d\u000a   id CHAR(32) not null,\u000d\u000a    limit double not null,\u000d\u000a    percent double not null,\u000d\u000a    bank_id CHAR(32),\u000d\u000a    primary key (id)\u000d\u000a)
+create table bank (\u000d\u000a      id CHAR(32) not null,\u000d\u000a      name varchar(255),\u000d\u000a      primary key (id)\u000d\u000a)
+alter table calendar\u000d\u000a   add foreign key (offer_id)\u000d\u000a   references offer
+alter table client\u000d\u000a   add foreign key (bank_id)\u000d\u000a   references bank
+alter table credit\u000d\u000a   add foreign key (bank_id)\u000d\u000a   references bank
+/*C27*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/drop table if exists calendar
+drop table if exists offer
+drop table if exists client
+drop table if exists credit
+drop table if exists bank
+create table calendar (\u000d\u000a      id CHAR(32) not null,\u000d\u000a      body_amount double not null,\u000d\u000a      date date,\u000d\u000a      payment_amount double not null,\u000d\u000a      percent_amount double not null,\u000d\u000a      offer_id CHAR(32),\u000d\u000a      primary key (id)\u000d\u000a)
+create table offer (\u000d\u000a   id CHAR(32) not null,\u000d\u000a    name varchar(255),\u000d\u000a    primary key (id),\u000d\u000a   client_id CHAR(32),\u000d\u000a   credit_id CHAR(32)\u000d\u000a)
+create table client (\u000d\u000a   id CHAR(32) not null,\u000d\u000a    email varchar(255),\u000d\u000a    name varchar(255),\u000d\u000a    passport varchar(255),\u000d\u000a    phone varchar(255),\u000d\u000a    bank_id CHAR(32),\u000d\u000a    primary key (id)\u000d\u000a)
+create table credit (\u000d\u000a   id CHAR(32) not null,\u000d\u000a    limit double not null,\u000d\u000a    percent double not null,\u000d\u000a    bank_id CHAR(32),\u000d\u000a    primary key (id)\u000d\u000a)
+create table bank (\u000d\u000a      id CHAR(32) not null,\u000d\u000a      name varchar(255),\u000d\u000a      primary key (id)\u000d\u000a)
+alter table calendar\u000d\u000a   add foreign key (offer_id)\u000d\u000a   references offer
+alter table client\u000d\u000a   add foreign key (bank_id)\u000d\u000a   references bank
+alter table credit\u000d\u000a   add foreign key (bank_id)\u000d\u000a   references bank
+alter table offer\u000d\u000a   add foreign key (client_id)\u000d\u000a   references client
+alter table offer\u000d\u000a   add foreign key (credit_id)\u000d\u000a   references credit
+/*C28*/SET SCHEMA PUBLIC
+DISCONNECT
