@@ -14,7 +14,9 @@ Build and Run
     ```
     mvn clean install spring-boot:run
     ```
+   or run Dockerfile
 
-2. Open `http://localhost:8080` in a web browser.
+
+3. Open `http://localhost:8080` in a web browser.
 
 To create tables, execute main.sql
